@@ -1,5 +1,6 @@
 <script setup>
-  import ComDados from './components/ComDados.vue';
+import ComDados from './components/ComDados.vue';
+import ComDadosReativos from './components/ComDadosReativos.vue';
 import PrimeiroComponente from './components/PrimeiroComponente.vue';
 </script>
 
@@ -7,6 +8,7 @@ import PrimeiroComponente from './components/PrimeiroComponente.vue';
   <header>
     Vue
   </header>
+  <ComDadosReativos />
   <ComDados />
   <PrimeiroComponente />
 </template>
