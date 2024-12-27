@@ -3,6 +3,9 @@
 </script>
 
 <template>
+  <header>
+    Vue
+  </header>
   <PrimeiroComponente />
 </template>
 
