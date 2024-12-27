@@ -20,16 +20,20 @@
     }
 </style>
 
-<script>
+<!-- Ao utilizar o setup, o script se comporta como composition api -->
+<script setup>
+const nomeProduto = 'Caneta'
+const codigoProduto = '#003'
+
 // composition api
-export default {
-  setup() {
-    return {
-      nomeProduto: 'Lápis',
-      codigoProduto: '#002'
-    }
-  }
-}
+// export default {
+//   setup() {
+//     return {
+//       nomeProduto: 'Lápis',
+//       codigoProduto: '#002'
+//     }
+//   }
+// }
 
 // options api
 // export default {
