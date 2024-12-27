@@ -12,6 +12,7 @@ div {
     padding: 20px;
     margin: 30px;
     border-radius: 5px;
+    text-align: center;
 }
 
 div:hover {
