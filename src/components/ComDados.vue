@@ -25,6 +25,9 @@
 const nomeProduto = 'Caneta'
 const codigoProduto = '#003'
 
+</script>
+
+<!-- <script> -->
 // composition api
 // export default {
 //   setup() {
@@ -34,7 +37,9 @@ const codigoProduto = '#003'
 //     }
 //   }
 // }
+<!-- </script> -->
 
+<!-- <script> -->
 // options api
 // export default {
 //   data() {
@@ -44,5 +49,4 @@ const codigoProduto = '#003'
 //     }
 //   }
 // }
-
-</script>
+<!-- </script> -->
