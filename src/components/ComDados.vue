@@ -21,13 +21,24 @@
 </style>
 
 <script>
-// options api
+// composition api
 export default {
-  data() {
+  setup() {
     return {
-      nomeProduto: 'Caderno',
-      codigoProduto: '#001'
+      nomeProduto: 'Lápis',
+      codigoProduto: '#002'
     }
   }
 }
+
+// options api
+// export default {
+//   data() {
+//     return {
+//       nomeProduto: 'Caderno',
+//       codigoProduto: '#001'
+//     }
+//   }
+// }
+
 </script>
