@@ -2,7 +2,7 @@
     <div class="componente">
         <h1>Componente com dados reativos</h1>
         <p>{{ nomePessoa }} | {{ idadePessoa }}</p>
-        <button v-on:click="fazerAniversario">Fazer aniversário</button>
+        <button v-on:click="fazerAniversario()">Fazer aniversário</button>
         <!-- @ é um alias para v-on: -->
         <button @click="mudarNome">Mudar Nome</button>
     </div>
