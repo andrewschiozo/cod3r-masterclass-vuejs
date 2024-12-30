@@ -8,8 +8,7 @@
     </div>
 </template>
 
-<script setup>
-    // o ref permite a utilização de variáveis reativas
+<!-- <script setup>
     import { reactive } from 'vue'
 
     const pessoa = reactive({
@@ -25,5 +24,27 @@
     function mudarNome() {
         pessoa.nome = pessoa.nome === 'João' ? 'Vicente' : 'João'
     }
+
+</script> -->
+
+<script >
+    export default {
+        data() {
+            return {
+                pessoa: {
+                    nome: 'João',
+                    idade: 1
+                }
+            }
+        }
+        ,methods: {
+            fazerAniversario() {
+                this.pessoa.idade++
+            },
+            mudarNome() {
+                this.pessoa.nome = this.pessoa.nome === 'João' ? 'Vicente' : 'João'
+            }
+        }
+    } 
 
 </script>
