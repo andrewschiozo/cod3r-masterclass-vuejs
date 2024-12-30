@@ -45,3 +45,10 @@ button {
 button:hover {
   background-color: rgb(5, 102, 28);
 }
+
+input {
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin: 0 5px 10px 0;
+}
