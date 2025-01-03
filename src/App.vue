@@ -8,6 +8,7 @@ import EscutaEvento from './components/EscutaEvento.vue';
 import PrimeiroComponente from './components/PrimeiroComponente.vue';
 import PropriedadesAssistidas from './components/PropriedadesAssistidas.vue';
 import PropriedadesComputadas from './components/PropriedadesComputadas.vue';
+import RenderizacaoCondicional from './components/RenderizacaoCondicional.vue';
 
 const item = {
   item: 'Apontador',
@@ -20,6 +21,7 @@ const item = {
   <header>
     Vue
   </header>
+  <RenderizacaoCondicional nome="Andrews" :qtdCachorros="1"/>
   <PropriedadesAssistidas />
   <PropriedadesComputadas />
   <EscutaEvento />
