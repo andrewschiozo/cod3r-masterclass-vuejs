@@ -2,6 +2,7 @@
 import ComDados from './components/ComDados.vue';
 import ComDadosReativos from './components/ComDadosReativos.vue';
 import ComDadosReativosNaoPrimitivos from './components/ComDadosReativosNaoPrimitivos.vue';
+import ComProps from './components/ComProps.vue';
 import DataBinding from './components/DataBinding.vue';
 import PrimeiroComponente from './components/PrimeiroComponente.vue';
 </script>
@@ -10,7 +11,8 @@ import PrimeiroComponente from './components/PrimeiroComponente.vue';
   <header>
     Vue
   </header>
-
+  <ComProps item="Borracha" preco="2.50" />
+  <ComProps item="Caneta" preco="2.99" />
   <DataBinding />
   <ComDadosReativosNaoPrimitivos />
   <ComDadosReativos />
