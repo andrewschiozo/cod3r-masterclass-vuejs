@@ -5,12 +5,19 @@ import ComDadosReativosNaoPrimitivos from './components/ComDadosReativosNaoPrimi
 import ComProps from './components/ComProps.vue';
 import DataBinding from './components/DataBinding.vue';
 import PrimeiroComponente from './components/PrimeiroComponente.vue';
+
+const item = {
+  item: 'Apontador',
+  preco: 1.50
+}
+
 </script>
 
 <template>
   <header>
     Vue
   </header>
+  <ComProps :item="item.item" :preco="item.preco" />
   <ComProps item="Borracha" v-bind:preco="2.50" />
   <ComProps item="Caneta" :preco="2.99" />
   <ComProps item="Caderno" :preco="2.25" />
