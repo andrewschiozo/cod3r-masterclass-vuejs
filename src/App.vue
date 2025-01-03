@@ -11,8 +11,9 @@ import PrimeiroComponente from './components/PrimeiroComponente.vue';
   <header>
     Vue
   </header>
-  <ComProps item="Borracha" preco="2.50" />
-  <ComProps item="Caneta" preco="2.99" />
+  <ComProps item="Borracha" v-bind:preco="2.50" />
+  <ComProps item="Caneta" :preco="2.99" />
+  <ComProps item="Caderno" :preco="2.25" />
   <DataBinding />
   <ComDadosReativosNaoPrimitivos />
   <ComDadosReativos />
