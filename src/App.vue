@@ -4,6 +4,7 @@ import ComDadosReativos from './components/ComDadosReativos.vue';
 import ComDadosReativosNaoPrimitivos from './components/ComDadosReativosNaoPrimitivos.vue';
 import ComProps from './components/ComProps.vue';
 import DataBinding from './components/DataBinding.vue';
+import EscutaEvento from './components/EscutaEvento.vue';
 import PrimeiroComponente from './components/PrimeiroComponente.vue';
 
 const item = {
@@ -17,6 +18,7 @@ const item = {
   <header>
     Vue
   </header>
+  <EscutaEvento />
   <ComProps :item="item.item" :preco="item.preco" />
   <ComProps item="Borracha" v-bind:preco="2.50" />
   <ComProps item="Caneta" :preco="2.99" />
