@@ -2,6 +2,7 @@
     <div class="componente">
         <h1>Componente com Renderização de Listas</h1>
         <p>Nome: {{ nome }}</p>
+        <p v-show="cachorros.length === 0">Não tem cachorro</p>
         <ul>
             <li v-for="cachorro in cachorros">
                 Nome: {{ cachorro.nome }} | Idade: {{ cachorro.idade }}
