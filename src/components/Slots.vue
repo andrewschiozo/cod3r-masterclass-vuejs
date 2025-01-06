@@ -2,7 +2,7 @@
     <div class="componente">
         <h1>Componente com Slots</h1>
         <button>
-            <slot></slot>
+            <slot name="icone" /> <slot name="texo" />
         </button>
     </div>
 </template>
