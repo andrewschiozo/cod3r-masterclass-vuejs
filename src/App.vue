@@ -9,19 +9,25 @@ import PrimeiroComponente from './components/PrimeiroComponente.vue';
 import PropriedadesAssistidas from './components/PropriedadesAssistidas.vue';
 import PropriedadesComputadas from './components/PropriedadesComputadas.vue';
 import RenderizacaoCondicional from './components/RenderizacaoCondicional.vue';
+import RenderizacaoListas from './components/RenderizacaoListas.vue';
 
 const item = {
   item: 'Apontador',
   preco: 1.50
 }
 
+const cachorrosDoVicente = [
+  { nome: 'Rex', idade: 2},
+  { nome: 'Toby', idade: 1}
+]
 </script>
 
 <template>
   <header>
     Vue
   </header>
-  <RenderizacaoCondicional nome="Andrews" :qtdCachorros="1"/>
+  <RenderizacaoListas nome="Vicente" :cachorros="cachorrosDoVicente" />
+  <RenderizacaoCondicional nome="João" :qtdCachorros="1"/>
   <PropriedadesAssistidas />
   <PropriedadesComputadas />
   <EscutaEvento />
