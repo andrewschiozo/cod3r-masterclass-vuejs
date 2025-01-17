@@ -28,6 +28,7 @@
             const { data } = await http.post('/login', user)
             auth.setToken(data.token)
             auth.setUser(data.user)
+            auth.setIsAuth(true)
         } catch (error) {
             console.log(error?.response?.data)
         }

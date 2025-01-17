@@ -6,6 +6,8 @@ import router from '@/router'
 export const useAuth = defineStore('auth', () => {
      const token = ref(localStorage.getItem('token'))
      const user = ref(JSON.parse(localStorage.getItem('user')))
+     const isAuth = ref(false)
+
      
      function setToken(tokenValue) {
           localStorage.setItem('token', tokenValue)
@@ -16,26 +18,27 @@ export const useAuth = defineStore('auth', () => {
           localStorage.setItem('user', JSON.stringify(userValue))
           user.value = userValue
      }
+
+     function setIsAuth(isAuthValue) {
+          isAuth.value = isAuthValue
+     }
      
      async function checkToken() {
           try {
                const tokenAuth = `Bearer ${token.value}`
-               const { data } = await http.get('/auth/verify', { headers: { Authorization: tokenAuth } })
+               const { data } = await http.get('/auth/verify', { headers: { Authorization: tokenAuth} })
                return data
           } catch (error) {
-               console.log(error?.response?.data)
+               isAuth.value = false
           }
      }
-
-     const isAuthenticated = computed(() => {
-          return token.value && user.value
-     })
 
      function logout() {
           localStorage.removeItem('token')
           localStorage.removeItem('user')
           token.value = null
           user.value = null
+          isAuth.value = false
 
           router.push({ name: 'login' })
      }
@@ -44,8 +47,9 @@ export const useAuth = defineStore('auth', () => {
           setToken,
           setUser,
           checkToken,
-          isAuthenticated,
+          setIsAuth,
           logout,
+          isAuth,
           token,
           user
      }
