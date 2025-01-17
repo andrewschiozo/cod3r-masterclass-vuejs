@@ -14,8 +14,6 @@ const pinia = createPinia()
 app.use(pinia)
 app.use(router)
 
-console.log('main')
-
 if(localStorage.getItem('token')) {
     //iife
     (async () => {
