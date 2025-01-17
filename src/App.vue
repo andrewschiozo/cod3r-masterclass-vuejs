@@ -7,7 +7,7 @@
 <template>
   <header>
     Olá, 
-    <template v-if="auth.isAuthenticated">
+    <template v-if="auth.isAuth">
       {{ auth.user }}
     </template>
     <template v-else>

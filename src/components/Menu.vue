@@ -11,7 +11,7 @@
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/link1">Link 1</RouterLink>
         <RouterLink to="/link2">Link 2</RouterLink>
-        <template v-if="auth.isAuthenticated">
+        <template v-if="auth.isAuth">
             <a href="#" @click="auth.logout">Logout</a>        
         </template>
         <template v-else>
