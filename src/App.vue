@@ -1,10 +1,18 @@
 <script setup>
   import Menu from './components/Menu.vue';
+  import { useAuth } from './stores/auth';
+  const auth = useAuth()
 </script>
 
 <template>
   <header>
-    Vue
+    Olá, 
+    <template v-if="auth.isAuthenticated">
+      {{ auth.user }}
+    </template>
+    <template v-else>
+      visitante
+    </template>
   </header>
   
   <Menu />
