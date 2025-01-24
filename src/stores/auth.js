@@ -5,7 +5,7 @@ import router from '@/router'
 
 export const useAuth = defineStore('auth', () => {
      const token = ref(localStorage.getItem('token'))
-     const user = ref(JSON.parse(localStorage.getItem('user')))
+     const userData = ref({})
      const isAuth = ref(false)
 
      
@@ -14,9 +14,9 @@ export const useAuth = defineStore('auth', () => {
           token.value = tokenValue
      }
      
-     function setUser(userValue) {
-          localStorage.setItem('user', JSON.stringify(userValue))
-          user.value = userValue
+     function setUserData(userValue) {
+          // localStorage.setItem('userData', JSON.stringify(userValue))
+          userData.value = userValue
      }
 
      function setIsAuth(isAuthValue) {
@@ -35,9 +35,8 @@ export const useAuth = defineStore('auth', () => {
 
      function logout() {
           localStorage.removeItem('token')
-          localStorage.removeItem('user')
           token.value = null
-          user.value = null
+          userData.value = {}
           isAuth.value = false
 
           router.push({ name: 'login' })
@@ -45,12 +44,12 @@ export const useAuth = defineStore('auth', () => {
 
      return {
           setToken,
-          setUser,
+          setUserData,
           checkToken,
           setIsAuth,
           logout,
           isAuth,
           token,
-          user
+          userData
      }
 })
