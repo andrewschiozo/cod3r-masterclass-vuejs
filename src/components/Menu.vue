@@ -9,9 +9,9 @@
         <div class="componente">
         <h1>Componente com VueRouter</h1>
         <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/link1">Link 1</RouterLink>
-        <RouterLink to="/link2">Link 2</RouterLink>
-        <template v-if="auth.isAuthenticated">
+        <template v-if="auth.isAuth">
+          <RouterLink to="/link1">Link 1</RouterLink>
+          <RouterLink to="/link2">Link 2</RouterLink>
             <a href="#" @click="auth.logout">Logout</a>        
         </template>
         <template v-else>
