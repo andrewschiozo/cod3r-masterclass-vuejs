@@ -12,6 +12,7 @@
         <template v-if="auth.isAuth">
           <RouterLink to="/link1">Link 1</RouterLink>
           <RouterLink to="/link2">Link 2</RouterLink>
+          <RouterLink to="/profile">Profile</RouterLink>
             <a href="#" @click="auth.logout">Logout</a>        
         </template>
         <template v-else>
