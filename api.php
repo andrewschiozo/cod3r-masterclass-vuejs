@@ -31,9 +31,24 @@ function routeLogin() {
         return routeDefault();
     
     define('USERS', [
-        'u1@mail.com' => password_hash('123456', PASSWORD_DEFAULT),
-        'u2@mail.com' => password_hash('123456', PASSWORD_DEFAULT),
-        'u3@mail.com' => password_hash('123456', PASSWORD_DEFAULT)
+        'u1@mail.com' => ['firstName' => 'João Vicente'
+                         ,'lastName' => 'Costa Chiozo'
+                         ,'birthday' => '2025-05-26'
+                         ,'profile' => ['Admin']
+                         ,'password' => password_hash('123456', PASSWORD_DEFAULT)
+                         ,'token' => 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwiaWF0IjoxNTE2MjM5MDIyLCJ1c2VyRGF0YSI6eyJmaXJzdE5hbWUiOiJKb8OjbyBWaWNlbnRlIiwibGFzdE5hbWUiOiJDb3N0YSBDaGlvem8iLCJiaXJ0aGRheSI6IjIwMjUtMDUtMjYiLCJwcm9maWxlIjpbIkFkbWluIl19fQ.CB0wwmpBGNArRZYRzBZzevA756mN70wME8aXrTWnRxQ']
+        ,'u2@mail.com' => ['firstName' => 'Maria Helena'
+                         ,'lastName' => 'Costa Chiozo'
+                         ,'birthday' => '2026-07-02'
+                         ,'profile' => ['Teacher']
+                         ,'password' => password_hash('123456', PASSWORD_DEFAULT)
+                         ,'token' => 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwiaWF0IjoxNTE2MjM5MDIyLCJ1c2VyRGF0YSI6eyJmaXJzdE5hbWUiOiJNYXJpYSBIZWxlbmEiLCJsYXN0TmFtZSI6IkNvc3RhIENoaW96byIsImJpcnRoZGF5IjoiMjAyNi0wNy0wMiIsInByb2ZpbGUiOlsiVGVhY2hlciJdfX0.G10zyGi5fjLMY2s0v0yHNxzlNZ1F23qstaa_eHvWWHs']
+        ,'u3@mail.com' => ['firstName' => 'Laura'
+                         ,'lastName' => 'Costa Chiozo'
+                         ,'birthday' => '2027-09-11'
+                         ,'profile' => ['Student']
+                         ,'password' => password_hash('123456', PASSWORD_DEFAULT)
+                         ,'token' => 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwiaWF0IjoxNTE2MjM5MDIyLCJ1c2VyRGF0YSI6eyJmaXJzdE5hbWUiOiJMYXVyYSIsImxhc3ROYW1lIjoiQ29zdGEgQ2hpb3pvIiwiYmlydGhkYXkiOiIyMDI3LTA5LTExIiwicHJvZmlsZSI6WyJTdHVkZW50Il19fQ.6OWWsuS4uHvH4cnObVfH6kOOadYiCdr8YdeUxbdmG68']
     ]);
 
     // $inputData = json_decode(file_get_contents('php://input'));
@@ -43,15 +58,13 @@ function routeLogin() {
     if(!isset(USERS[INPUT_DATA->username]))
         return response(['message' => 'User not found'], 404);
     
-    $userPassword = USERS[INPUT_DATA->username];
-    
+    $userPassword = USERS[INPUT_DATA->username]['password'];
+
     if(!password_verify(INPUT_DATA->password, $userPassword))
         return response(['message' => 'Unauthorized'], 401);
     
-    $token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IlVzdcOhcmlvIiwiaWF0IjoxNTE2MjM5MDIyfQ.nZk-9TMEvUeeIRu5vUogmaPC6wTePr_sMi9PlKowfDk';
-
     http_response_code(200);
-    echo json_encode(['user' => 'João Vicente', 'token' => $token]);
+    echo json_encode(['token' => USERS[INPUT_DATA->username]['token']]);
     return;
 }
 
