@@ -7,8 +7,8 @@
 <template>
   <header>
     Olá, 
-    <template v-if="auth.isAuthenticated">
-      {{ auth.user }}
+    <template v-if="auth.isAuth">
+      {{ auth.userData.firstName }}
     </template>
     <template v-else>
       visitante
