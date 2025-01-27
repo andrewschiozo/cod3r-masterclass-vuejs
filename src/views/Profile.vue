@@ -25,26 +25,28 @@
     <div class="componente">
         <h1>Profile</h1>
         <table>
-            <tr>
-                <th>Firsname</th>
-                <td>{{auth.userData.firstName}}</td>
-            </tr>
-            <tr>
-                <th>Lastname</th>
-                <td>{{auth.userData.lastName}}</td>
-            </tr>
-            <tr>
-                <th>Birth</th>
-                <td>{{auth.userData.birthday}}</td>
-            </tr>
-            <tr>
-                <th>Age</th>
-                <td>{{ age }}</td>
-            </tr>
-            <tr>
-                <th>Roles</th>
-                <td>{{ roles }}</td>
-            </tr>
+            <tbody>
+                <tr>
+                    <th>Firsname</th>
+                    <td>{{auth.userData.firstName}}</td>
+                </tr>
+                <tr>
+                    <th>Lastname</th>
+                    <td>{{auth.userData.lastName}}</td>
+                </tr>
+                <tr>
+                    <th>Birth</th>
+                    <td>{{auth.userData.birthday}}</td>
+                </tr>
+                <tr>
+                    <th>Age</th>
+                    <td>{{ age }}</td>
+                </tr>
+                <tr>
+                    <th>Roles</th>
+                    <td>{{ roles }}</td>
+                </tr>
+            </tbody>
         </table>
     </div>
 </template>
