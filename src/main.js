@@ -15,7 +15,7 @@ const pinia = createPinia()
 
 app.use(pinia)
 app.use(router)
-app.use(Vue3Toastify, { autoClose: 3000 })
+app.use(Vue3Toastify, { autoClose: 3000, theme: 'dark' })
 
 if(localStorage.getItem('token')) {
     //iife
