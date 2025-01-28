@@ -6,7 +6,7 @@
             <input v-model="user.username" type="email" placeholder="E-mail">
             <input v-model="user.password" type="password" placeholder="Senha">
 
-            <button>Entrar</button>
+            <button class="btn">Entrar</button>
         </form>
     </div>
 </template>
@@ -16,6 +16,7 @@
     import { reactive } from 'vue';
     import { useAuth } from '@/stores/auth';
     import router from '@/router'
+    import { toast } from 'vue3-toastify';
 
     const auth = useAuth()
 
@@ -40,7 +41,7 @@
             auth.setIsAuth(true)
             router.push({ name: 'profile' })
         } catch (error) {
-            console.log(error?.response?.data)
+            toast(error?.response?.data?.message ? error.response.data.message : error.message, { type: 'error' })
         }
     }
 </script>
