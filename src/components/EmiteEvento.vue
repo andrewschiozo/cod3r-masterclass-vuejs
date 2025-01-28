@@ -2,7 +2,7 @@
     <div class="componente">
         <h1>Componente Emite Evento</h1>
         <p>{{ item }} | (R$ {{ preco.toFixed(2) }})</p>
-        <button @click="adicioarAoCarrinho">Adicionar ao carrinho</button>
+        <button class="btn" @click="adicioarAoCarrinho">Adicionar ao carrinho</button>
     </div>
 </template>
 
