@@ -15,8 +15,9 @@ const routes = [
         component: () => import('./views/Link2.vue'),
         meta: { requiresAuth: true }
     },
-    
-    { path: '/Profile', name: 'profile', component: () => import('./views/Profile.vue') },
+    { path: '/pedido/listar', name: 'pedidos', component: () => import('./views/Pedido/Pedidos.vue'), meta: {requiresAuth: true} },
+    { path: '/pedido/form', name: 'pedidoform', component: () => import('./views/Pedido/PedidoForm.vue'), meta: {requiresAuth: true} },
+    { path: '/Profile', name: 'profile', component: () => import('./views/Profile.vue'), meta: {requiresAuth: true} },
     { path: '/Login', name: 'login', component: () => import('./views/Login.vue') },
 ]
 
@@ -29,9 +30,8 @@ router.beforeEach(async (to, from, next) => {
     if(to.meta?.requiresAuth) {
         const auth = useAuth()
         auth.isAuth ? next() : next({ name: 'login' })
+        return
     }
-    else {
-        next()
-    }
+    return next() 
 })
 export default router
