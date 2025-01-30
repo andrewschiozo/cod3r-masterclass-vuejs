@@ -6,30 +6,38 @@ header('Content-Type: application/json');
 
 define('INPUT_DATA', json_decode(file_get_contents('php://input')) ?? json_decode('{}'));
 
+
 switch ($_SERVER['REQUEST_URI']) {
     case '/api/login':
-        routeLogin();
-        break;
-    case '/api/auth/verify':
-        verifyToken();
-        break;
-    case '/api/orders/':
-        routeOrders();
-        break;
-    default:
-        routeDefault();
-        error_log('Route not found');
-        break;
-}
-
-function routeDefault() {
-    response(['message' => 'Hello World!'], 200);
-}
-
-function routeLogin() {
-    if($_SERVER['REQUEST_METHOD'] !== 'POST')
-        return routeDefault();
+        if(in_array($_SERVER['REQUEST_METHOD'], ['POST', 'OPTIONS']))
+            return login();
     
+        return response(message: 'Method not allowed', code: 405);    
+        break;
+    
+    case '/api/auth/verify':
+        if(in_array($_SERVER['REQUEST_METHOD'], ['GET', 'OPTIONS']))
+            return verifyToken();
+        
+        return response(message: 'Method not allowed', code: 405);
+        break;
+
+    case '/api/order':
+        if(in_array($_SERVER['REQUEST_METHOD'], ['GET', 'OPTIONS']))
+            return getOrder();
+
+            if(in_array($_SERVER['REQUEST_METHOD'], ['POST', 'OPTIONS']))
+            return saveOrder();
+
+        return response(message: 'Method not allowed', code: 405);
+        break;
+    
+    default:
+        return response(message: 'Route not found', code: 404);
+        break;
+}
+
+function login() {    
     define('USERS', [
         'u1@mail.com' => ['firstName' => 'João Vicente'
                          ,'lastName' => 'Costa Chiozo'
@@ -51,7 +59,6 @@ function routeLogin() {
                          ,'token' => 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwiaWF0IjoxNTE2MjM5MDIyLCJ1c2VyRGF0YSI6eyJmaXJzdE5hbWUiOiJMYXVyYSIsImxhc3ROYW1lIjoiQ29zdGEgQ2hpb3pvIiwiYmlydGhkYXkiOiIyMDI3LTA5LTExIiwicHJvZmlsZSI6WyJTdHVkZW50Il19fQ.6OWWsuS4uHvH4cnObVfH6kOOadYiCdr8YdeUxbdmG68']
     ]);
 
-    // $inputData = json_decode(file_get_contents('php://input'));
     if(!property_exists(INPUT_DATA, 'username') || !property_exists(INPUT_DATA, 'password'))
         return response(['message' => 'Expected username and password'], 404);
 
@@ -69,13 +76,26 @@ function routeLogin() {
 }
 
 function verifyToken() {
-    // if()
     return response(['message' => 'Authorized'], 200);
 }
 
-function response($data, $code) {
+function getOrder() {
+    $orders = '[{"order":0,"client":"Jo\u00e3o Vicente","amount":1600,"items":21},{"order":20466,"client":"Maria Helena","amount":2100,"items":17},{"order":20467,"client":"Laura","amount":1200,"items":9}]';
+
+    define('ORDERS', json_decode($orders));
+
+    http_response_code(200);
+    echo json_encode(['data' => ORDERS]);
+    return;
+}
+
+function saveOrder() {    
+    response(['message' => 'Registro salvo'], 200);
+}
+
+function response($data = null, $message = 'Hello World', $code = 200) {
     http_response_code($code);
-    echo json_encode($data);
+    echo json_encode(['message' => $message, 'data' => $data]);
     error_log(json_encode($data));
     return;
 }
