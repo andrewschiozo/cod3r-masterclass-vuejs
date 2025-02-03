@@ -5,11 +5,25 @@
     import { useAuth } from '@/stores/auth';
     import { ref } from 'vue';
     import { toast } from 'vue3-toastify';
+    import { usePedidoStore } from '@/stores/Pedido/PedidoStore';
 
     const id = ref(0)
     const cliente = ref('')
     const vlTotal = ref(0)
     const qtdItens = ref(0)
+
+    const pedidoStore = usePedidoStore()
+    const pedidoEditavel = pedidoStore.getPedido
+    console.log('receive: ', pedidoEditavel)
+
+    if(pedidoEditavel) {
+        id.value = pedidoEditavel.id
+        cliente.value = pedidoEditavel.client
+        vlTotal.value = pedidoEditavel.amount
+        qtdItens.value = pedidoEditavel.items
+    }
+
+    
 
     const salvar = async function () {
         const user = { headers: { Authorization: 'Bearer ' + useAuth().token } }

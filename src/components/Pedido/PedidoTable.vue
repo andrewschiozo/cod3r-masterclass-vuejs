@@ -19,14 +19,19 @@
     // defineProps({ pedidos: Array })
     import PedidoRow from './PedidoRow.vue'
     import router from '@/router'
+    import { usePedidoStore } from '@/stores/Pedido/PedidoStore'
 
     const props = defineProps({ pedidos: Array })
+    const pedidoStore = usePedidoStore()
+    pedidoStore.clearPedido()
 
     function removerPedido(pedido) {
         props.pedidos.splice(props.pedidos.indexOf(pedido), 1)
     }
     
     function editarPedido(pedido) {
+        pedidoStore.setPedido(pedido)
+        console.log('send: ', pedidoStore.getPedido)
         router.push({ name: 'pedidoform' })
     }
 </script>
