@@ -36,8 +36,8 @@
     async function login() {
         try {
             const { data } = await http.post('/login', user)
-            auth.setToken(data.token)
-            auth.setUserData(parseJwt(data.token).userData)
+            auth.setToken(data.data.token)
+            auth.setUserData(parseJwt(data.data.token).userData)
             auth.setIsAuth(true)
             router.push({ name: 'profile' })
         } catch (error) {
