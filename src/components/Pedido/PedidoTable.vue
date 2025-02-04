@@ -10,7 +10,7 @@
             </tr>
         </thead>
         <tbody>
-            <PedidoRow v-for="pedido in pedidos" :key="pedido.order" :pedido="pedido" @removerPedido="removerPedido" @editarPedido="editarPedido"/>
+            <PedidoRow v-for="pedido in pedidos" :key="pedido.order" :pedido="pedido" @removerPedido="removerPedido(pedido)" @editarPedido="editarPedido"/>
         </tbody>
     </table>
 </template>
@@ -19,19 +19,33 @@
     // defineProps({ pedidos: Array })
     import PedidoRow from './PedidoRow.vue'
     import router from '@/router'
+    import http from '@/services/http'
+    import { useAuth } from '@/stores/auth';
     import { usePedidoStore } from '@/stores/Pedido/PedidoStore'
+    import { toast } from 'vue3-toastify';
 
     const props = defineProps({ pedidos: Array })
     const pedidoStore = usePedidoStore()
     pedidoStore.clearPedido()
 
-    function removerPedido(pedido) {
-        props.pedidos.splice(props.pedidos.indexOf(pedido), 1)
+    async function removerPedido(pedido) {
+        const user = { headers: { Authorization: 'Bearer ' + useAuth().token } }
+        const orderSend = {
+            order: pedido.order
+        }
+
+        try {
+            const { data }  = await http.post('/orderdelete', orderSend, user)
+            props.pedidos.splice(props.pedidos.indexOf(pedido), 1)
+            toast('Pedido removido com sucesso', { autoClose: 1000, type: 'success'})
+        } catch (error) {
+            toast(error?.response?.data?.message ? error.response.data.message : error.message, { type: 'error' })
+        }
+        
     }
     
     function editarPedido(pedido) {
         pedidoStore.setPedido(pedido)
-        console.log('send: ', pedidoStore.getPedido)
         router.push({ name: 'pedidoform' })
     }
 </script>
