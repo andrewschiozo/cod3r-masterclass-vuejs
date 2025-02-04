@@ -27,7 +27,8 @@ function login() {
     if(!property_exists($inputData, 'username') || !property_exists($inputData, 'password')) 
         return response(message: 'Expected username and password', code: 400);
     
-    $users = getDbData('users', "email = '" . $inputData->username . "'");
+    $filter = "email = '" . $inputData->username . "'";
+    $users = getDbData('users', $filter);
     
     if(!count($users))
         return response(message: 'User not found', code: 401);
@@ -57,22 +58,50 @@ function getOrder() {
 }
 
 function saveOrder() {
-    try{
-        $conn = conn();
-        $query = "INSERT INTO orders ('order', 'client', 'amount', 'items', 'status') VALUES (?,?,?,?,?)";    
-        $stmt = $conn->prepare($query);
-        $stmt->execute(array('20468', 'João Vicente', '1600', '21', 'pending'));
-        response(['message' => 'Registro salvo'], 200);
+    $inputData = json_decode(file_get_contents('php://input'));
+    
+    if(isset($inputData->order) && $inputData->order > 0)
+    {
+        $filter = '"order" = ' . $inputData->order;
+        $orders = getDbData('orders', $filter);
+        if(!count($orders))
+            return response(message: 'Order not found', code: 404);
+
+        unset($inputData->order);
+        $inputData->id = $orders[0]->id;
+        updateDbData('orders', $inputData);
+        return response(['message' => 'Registro atualizado'], 200);
     }
-    catch(PDOException $e) {
-        response(message: $e->getMessage(), code: 400);
+
+    $inputData->order = random_int(100000, 999999);
+
+    $id = insertDbData('orders', $inputData);
+    return response(['message' => 'Registro inserido'], 200);
+   
+}
+
+function deleteOrder() {
+    
+    $inputData = json_decode(file_get_contents('php://input'));
+    
+    if(isset($inputData->order) && $inputData->order > 0)
+    {   
+        $filter = '"order" = ' . $inputData->order;
+        
+        $orders = getDbData('orders', $filter);
+        
+        if(!count($orders))
+            return response(message: 'Order not found', code: 404);
+
+        deleteDbData('orders', $orders[0]->id);
+        return response(['message' => 'Registro excluído'], 200);
     }
 }
 
 function response($data = null, $message = null, $code = 200) {    
     http_response_code($code);
     echo json_encode(['message' => $message, 'data' => $data]);
-    return json_encode(['message' => $message, 'data' => $data]);
+    return;
 }
 
 function getDbData($table, $where = null) {
@@ -83,10 +112,64 @@ function getDbData($table, $where = null) {
         $whereString = $where ? ' WHERE ' . $where : '';
 
         $query = 'SELECT * FROM ' . $table . $whereString;
+        error_log($query);
         $stmt = $pdo->query($query);
         $result = $stmt->fetchAll();
         return $result;
     } catch (PDOException $e) {
+        echo 'Connection failed: ' . $e->getMessage();
+        return null;
+    }
+}
+
+function insertDbData($table, stdClass $data) {
+    try {
+        $pdo = new PDO('sqlite:app.db');
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
+        $keys = array_keys(get_object_vars($data));
+        $values = array_values(get_object_vars($data));
+        $query = 'INSERT INTO ' . $table . ' ("' . implode('", "', $keys) . '") VALUES (' . implode(', ', array_fill(0, count($keys), '?')) . ')';
+        $stmt = $pdo->prepare($query);
+        $stmt->execute($values);
+        return $pdo->lastInsertId();
+    } catch (PDOException $e) {
+        echo 'Connection failed: ' . $e->getMessage();
+        return null;
+    }
+}
+
+function updateDbData($table, stdClass $data) {
+    $id = $data->id;
+    unset($data->id);
+    try{
+        $pdo = new PDO('sqlite:app.db');
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
+        $keys = array_keys(get_object_vars($data));
+        $values = array_values(get_object_vars($data));
+        $query = 'UPDATE ' . $table . ' SET "' . implode('" = ?, "', $keys) . '" = ? WHERE id = ' . $id;
+        $stmt = $pdo->prepare($query);
+        $stmt->execute($values);
+        return $pdo->lastInsertId();
+    }
+    catch(PDOException $e) {
+        echo 'Connection failed: ' . $e->getMessage();
+        return null;
+    }
+}
+
+function deleteDbData($table, $id) {
+    try{
+        $pdo = new PDO('sqlite:app.db');
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
+        $query = 'DELETE FROM ' . $table . ' WHERE id = ' . $id;
+        $stmt = $pdo->prepare($query);
+        $stmt->execute();
+        return $pdo->lastInsertId();
+    }
+    catch(PDOException $e) {
         echo 'Connection failed: ' . $e->getMessage();
         return null;
     }
